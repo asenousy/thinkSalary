@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import LabeledOutput from "./LabeledOutput";
 import Details from "./Details";
 
-const initialState = { salary: 0 };
+const initialState = { salary: 0, pensionRate: 0, allowance: 0 };
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
@@ -30,12 +30,6 @@ const reducer = (state: any, action: any) => {
   }
 };
 
-const netDetails = (state: any) => {};
-
-const netSelector = (state: any) => {
-  return state.salary * 0.4;
-};
-
 const timeUnits = ["Annual", "Monthly", "Weekly", "Daily", "Hourly"];
 
 export default function App() {
@@ -48,14 +42,14 @@ export default function App() {
             <Text style={styles.label}>Salary:</Text>
             <TextInput
               style={styles.input}
-              value="0"
+              value="2500"
               keyboardType="numeric"
               clearButtonMode={"while-editing"}
               onFocus={() => dispatch({ type: "formatSalary" })}
               onEndEditing={() => dispatch({ type: "formatSalary" })}
               onChange={(value) => dispatch({ type: "updateSalary", value })}
             />
-            <Picker selectedValue={timeUnits[0]} itemStyle={styles.picker}>
+            <Picker selectedValue={timeUnits[1]} itemStyle={styles.picker}>
               {timeUnits.map((timeUnit) => (
                 <Picker.Item
                   key={`picker-${timeUnit}`}
@@ -78,7 +72,8 @@ export default function App() {
           <Details />
           <LabeledOutput
             label="Take Home:"
-            value={"£ " + netSelector(state).toFixed(2)}
+            // value={"£ " + netSelector(state).toFixed(2)}
+            value="£ 1500"
           />
         </View>
         <View style={styles.footer}>

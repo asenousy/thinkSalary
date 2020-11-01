@@ -19,14 +19,15 @@ const styles = StyleSheet.create(
     container: {
       flexDirection: "row",
       justifyContent: "center",
-      padding: 5,
+      padding: 10,
+      margin: 10,
     },
     label: {
       textAlign: "center",
       minWidth: 70,
-      padding: 5,
       fontWeight: "bold",
-      fontSize: 16,
+      padding: 5,
+      fontSize: 20,
     },
   })
 );
