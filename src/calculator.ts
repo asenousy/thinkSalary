@@ -29,7 +29,7 @@ function capZero(figure: number) {
   return Math.max(figure, 0);
 }
 
-function calculateTax(income: number, rules: any) {
+function calculateTax(income: number, rules: typeof TAX_RULES) {
   let tax = 0;
   for (const { band, rate } of rules) {
     tax += rate * Math.min(income, band);
