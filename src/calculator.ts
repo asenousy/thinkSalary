@@ -1,5 +1,3 @@
-const ALLOWANCE = 12500;
-
 const taxRules = [
   { band: 37500, rate: 0.2 },
   { band: 100000, rate: 0.4 },
@@ -12,28 +10,24 @@ const niRules = [
   { band: Infinity, rate: 0.02 },
 ];
 
-function splitByBands(income: number, rules: any) {
-  const bands = [];
-  while (income > 0) {
-    const band = rules[bands.length].band;
-    income > band ? bands.push(band) : bands.push(income);
-    income = income - band;
-  }
-  return bands;
-}
-
-function calculateTax(income: number, rules: any) {
-  const bands = splitByBands(income, rules);
-  return bands.reduce((tax, band, i) => tax + band * rules[i].rate, 0);
-}
-
 function calculateAllowance(income: number) {
-  if (income > 125000) return 0;
-  return ALLOWANCE;
+  let allowance = 12500;
+  income = capZero(income - 100000);
+  allowance -= Math.floor(income / 2);
+  return capZero(allowance);
 }
 
 function capZero(figure: number) {
   return Math.max(figure, 0);
+}
+
+function calculateTax(income: number, rules: any) {
+  let tax = 0;
+  for (const { band, rate } of rules) {
+    tax += rate * Math.min(income, band);
+    income = capZero(income - band);
+  }
+  return tax;
 }
 
 export function calculate(salary: number, pensionRate: number) {

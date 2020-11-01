@@ -42,6 +42,62 @@ test("calculate salary 60k", () => {
   });
 });
 
+test("calculate salary 100k", () => {
+  const salary = 100000;
+  const pensionRate = 0;
+  expect(calculate(salary, pensionRate)).toEqual({
+    salary: 100000,
+    pension: 0,
+    taxable: 87500,
+    studentLoan: 0,
+    tax: 27500,
+    ni: 5860.48,
+    net: 66639.52,
+  });
+});
+
+test("calculate salary 110k", () => {
+  const salary = 110000;
+  const pensionRate = 1;
+  expect(calculate(salary, pensionRate)).toEqual({
+    salary: 110000,
+    pension: 1100,
+    taxable: 100850,
+    studentLoan: 0,
+    tax: 32840,
+    ni: 6060.48,
+    net: 69999.52,
+  });
+});
+
+test("calculate salary 120k", () => {
+  const salary = 120000;
+  const pensionRate = 2;
+  expect(calculate(salary, pensionRate)).toEqual({
+    salary: 120000,
+    pension: 2400,
+    taxable: 113900,
+    studentLoan: 0,
+    tax: 38060,
+    ni: 6260.48,
+    net: 73279.52,
+  });
+});
+
+test("calculate salary 125k", () => {
+  const salary = 125000;
+  const pensionRate = 0;
+  expect(calculate(salary, pensionRate)).toEqual({
+    salary: 125000,
+    pension: 0,
+    taxable: 125000,
+    studentLoan: 0,
+    tax: 42500,
+    ni: 6360.48,
+    net: 76139.52,
+  });
+});
+
 test("calculate salary 130k", () => {
   const salary = 130000;
   const pensionRate = 0;
