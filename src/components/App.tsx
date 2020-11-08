@@ -12,28 +12,36 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import LabeledOutput from "./LabeledOutput";
 import Details from "./Details";
+import calculate from "../calculator";
 
-const initialState = { salary: 0, pensionRate: 0, allowance: 0 };
+const initialState = { salary: "0", pensionRate: 0, loanPlan: 0, segment: 0 };
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
+    case "updateSegment":
+      return { ...state, segment: action.value };
     case "updateSalary":
       return { ...state, salary: action.value };
-    case "formatSalary":
-      let formatted = (+state.salary).toFixed(2);
-      formatted = state.salary.endsWith(".00")
-        ? state.salary.split(".").shift()
-        : formatted;
-      return { ...state, salary: formatted };
     default:
       throw new Error("no such action exist");
   }
 };
 
-const timeUnits = ["Annual", "Monthly", "Weekly", "Daily", "Hourly"];
+const timeUnitsScales = {
+  Annual: 1,
+  Monthly: 12,
+  Weekly: 52,
+  Daily: 260,
+  Hourly: 2080,
+};
+const timeUnits = Object.keys(timeUnitsScales);
+const scaleUnits = Object.values(timeUnitsScales);
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { salary, pensionRate, loanPlan, segment } = state;
+  const unit = scaleUnits[segment];
+  const { net, ...details } = calculate(+salary, pensionRate, loanPlan, unit);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -42,14 +50,13 @@ export default function App() {
             <Text style={styles.label}>Salary:</Text>
             <TextInput
               style={styles.input}
-              value="2500"
               keyboardType="numeric"
               clearButtonMode={"while-editing"}
-              onFocus={() => dispatch({ type: "formatSalary" })}
-              onEndEditing={() => dispatch({ type: "formatSalary" })}
-              onChange={(value) => dispatch({ type: "updateSalary", value })}
+              onEndEditing={({ nativeEvent }) =>
+                dispatch({ type: "updateSalary", value: nativeEvent.text })
+              }
             />
-            <Picker selectedValue={timeUnits[1]} itemStyle={styles.picker}>
+            <Picker selectedValue={timeUnits[0]} itemStyle={styles.picker}>
               {timeUnits.map((timeUnit) => (
                 <Picker.Item
                   key={`picker-${timeUnit}`}
@@ -62,19 +69,16 @@ export default function App() {
           <SegmentedControl
             style={styles.segment}
             values={timeUnits}
-            selectedIndex={0}
-            // onChange={(event) => {
-            //   this.setState({
-            //     selectedIndex: event.nativeEvent.selectedSegmentIndex,
-            //   });
-            // }}
+            selectedIndex={segment}
+            onChange={({ nativeEvent }) =>
+              dispatch({
+                type: "updateSegment",
+                value: nativeEvent.selectedSegmentIndex,
+              })
+            }
           />
-          <Details />
-          <LabeledOutput
-            label="Take Home:"
-            // value={"£ " + netSelector(state).toFixed(2)}
-            value="£ 1500"
-          />
+          <Details figures={details} />
+          <LabeledOutput label="Take Home:" value={`£${net.toFixed(2)}`} />
         </View>
         <View style={styles.footer}>
           <Ionicons name="ios-mail" size={36} color="dodgerblue" />

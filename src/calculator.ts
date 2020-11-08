@@ -44,19 +44,29 @@ function calculateLoan(income: number, plan: number) {
   return remainingIncome * rate;
 }
 
-export function calculate(
-  salary: number,
-  pensionRate: number,
-  loanPlan: number
-) {
-  const pension = (salary * pensionRate) / 100;
-  const salaryWithouPension = salary - pension;
-  const loan = calculateLoan(salary, loanPlan);
-  const allowance = calculateAllowance(salaryWithouPension);
-  const taxable = capZero(salaryWithouPension - allowance);
-  const tax = calculateTax(taxable, TAX_RULES);
-  const ni = calculateTax(salary, NI_RULES);
-  const net = salaryWithouPension - tax - ni - loan;
+function scaleByUnit(figures: object, unit: number) {
+  return Object.entries(figures).reduce((scaled, [key, value]) => {
+    scaled[key] = value / unit;
+    return scaled;
+  }, {} as any);
+}
 
-  return { salary, pension, loan, taxable, tax, ni, net };
+export default function calculate(
+  salary: number,
+  pensionRate: number = 0,
+  loanPlan: number = 0,
+  unit: number = 1
+) {
+  const gross = salary;
+  const pension = (gross * pensionRate) / 100;
+  const grossWithouPension = gross - pension;
+  const loan = calculateLoan(gross, loanPlan);
+  const allowance = calculateAllowance(grossWithouPension);
+  const taxable = capZero(grossWithouPension - allowance);
+  const tax = calculateTax(taxable, TAX_RULES);
+  const ni = calculateTax(gross, NI_RULES);
+  const net = grossWithouPension - tax - ni - loan;
+
+  const figures = { gross, pension, loan, taxable, tax, ni, net };
+  return scaleByUnit(figures, unit);
 }

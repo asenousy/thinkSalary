@@ -1,11 +1,11 @@
-import { calculate } from "./calculator";
+import calculate from "./calculator";
 
 test("calculate salary 5k", () => {
   const salary = 5000;
   const pensionRate = 5;
   const loanPlan = 1;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 5000,
+    gross: 5000,
     pension: 250,
     taxable: 0,
     loan: 0,
@@ -20,7 +20,7 @@ test("calculate salary 20k", () => {
   const pensionRate = 5;
   const loanPlan = 0;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 20000,
+    gross: 20000,
     pension: 1000,
     taxable: 6500,
     loan: 0,
@@ -35,7 +35,7 @@ test("calculate salary 28800k", () => {
   const pensionRate = 0;
   const loanPlan = 3;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 28800,
+    gross: 28800,
     pension: 0,
     taxable: 16300,
     loan: 468,
@@ -50,7 +50,7 @@ test("calculate salary 60k", () => {
   const pensionRate = 10;
   const loanPlan = 1;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 60000,
+    gross: 60000,
     pension: 6000,
     taxable: 41500,
     loan: 3655.7999999999997,
@@ -65,7 +65,7 @@ test("calculate salary 100k", () => {
   const pensionRate = 0;
   const loanPlan = 0;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 100000,
+    gross: 100000,
     pension: 0,
     taxable: 87500,
     loan: 0,
@@ -80,7 +80,7 @@ test("calculate salary 110k", () => {
   const pensionRate = 1;
   const loanPlan = 2;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 110000,
+    gross: 110000,
     pension: 1100,
     taxable: 100850,
     loan: 7508.88,
@@ -95,7 +95,7 @@ test("calculate salary 120k", () => {
   const pensionRate = 2;
   const loanPlan = 0;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 120000,
+    gross: 120000,
     pension: 2400,
     taxable: 113900,
     loan: 0,
@@ -110,7 +110,7 @@ test("calculate salary 125k", () => {
   const pensionRate = 0;
   const loanPlan = 0;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 125000,
+    gross: 125000,
     pension: 0,
     taxable: 125000,
     loan: 0,
@@ -125,7 +125,7 @@ test("calculate salary 130k", () => {
   const pensionRate = 0;
   const loanPlan = 0;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 130000,
+    gross: 130000,
     pension: 0,
     taxable: 130000,
     loan: 0,
@@ -140,12 +140,45 @@ test("calculate salary 180k", () => {
   const pensionRate = 5;
   const loanPlan = 0;
   expect(calculate(salary, pensionRate, loanPlan)).toEqual({
-    salary: 180000,
+    gross: 180000,
     pension: 9000,
     taxable: 171000,
     loan: 0,
     tax: 62575,
     ni: 7460.48,
     net: 100964.52,
+  });
+});
+
+describe("Calculate salary in time units", () => {
+  test("Annually", () => {
+    const salary = 180000;
+    const pensionRate = 5;
+    const loanPlan = 0;
+    const unit = 1;
+    expect(calculate(salary, pensionRate, loanPlan, unit)).toEqual({
+      gross: 180000,
+      pension: 9000,
+      taxable: 171000,
+      loan: 0,
+      tax: 62575,
+      ni: 7460.48,
+      net: 100964.52,
+    });
+  });
+  test("Monthly", () => {
+    const salary = 180000;
+    const pensionRate = 5;
+    const loanPlan = 0;
+    const unit = 12;
+    expect(calculate(salary, pensionRate, loanPlan, unit)).toEqual({
+      gross: 15000,
+      pension: 750,
+      taxable: 14250,
+      loan: 0,
+      tax: 5214.583333333333,
+      ni: 621.7066666666666,
+      net: 8413.710000000001,
+    });
   });
 });
