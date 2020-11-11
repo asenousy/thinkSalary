@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { Picker } from "@react-native-community/picker";
 import {
@@ -14,12 +14,14 @@ import LabeledOutput from "./LabeledOutput";
 import Details from "./Details";
 import calculate from "../calculator";
 
-const initialState = { salary: "0", pensionRate: 0, loanPlan: 0, segment: 0 };
+const initialState = {
+  salary: "0",
+  pensionRate: 0,
+  loanPlan: 0,
+};
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
-    case "updateSegment":
-      return { ...state, segment: action.value };
     case "updateSalary":
       return { ...state, salary: action.value };
     default:
@@ -37,11 +39,33 @@ const timeUnitsScales = {
 const timeUnits = Object.keys(timeUnitsScales);
 const scaleUnits = Object.values(timeUnitsScales);
 
+function currency(figure: number) {
+  return new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+  }).format(figure);
+}
+function format(input: any) {
+  if (typeof input === "number") return currency(input);
+  return Object.entries(input).reduce((fixed, [key, value]) => {
+    fixed[key] = currency(value as number);
+    return fixed;
+  }, {} as any);
+}
+
 export default function App() {
+  const [segment, setSegment] = useState(0);
+  const [picker, setPicker] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { salary, pensionRate, loanPlan, segment } = state;
+  const { salary, pensionRate, loanPlan } = state;
+  const annualSalary = salary * scaleUnits[picker];
   const unit = scaleUnits[segment];
-  const { net, ...details } = calculate(+salary, pensionRate, loanPlan, unit);
+  const { net, ...details } = calculate(
+    annualSalary,
+    pensionRate,
+    loanPlan,
+    unit
+  );
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -56,12 +80,16 @@ export default function App() {
                 dispatch({ type: "updateSalary", value: nativeEvent.text })
               }
             />
-            <Picker selectedValue={timeUnits[0]} itemStyle={styles.picker}>
-              {timeUnits.map((timeUnit) => (
+            <Picker
+              selectedValue={picker}
+              itemStyle={styles.picker}
+              onValueChange={(val, i) => setPicker(i)}
+            >
+              {timeUnits.map((timeUnit, i) => (
                 <Picker.Item
                   key={`picker-${timeUnit}`}
                   label={timeUnit}
-                  value={timeUnit}
+                  value={i}
                 />
               ))}
             </Picker>
@@ -71,14 +99,11 @@ export default function App() {
             values={timeUnits}
             selectedIndex={segment}
             onChange={({ nativeEvent }) =>
-              dispatch({
-                type: "updateSegment",
-                value: nativeEvent.selectedSegmentIndex,
-              })
+              setSegment(nativeEvent.selectedSegmentIndex)
             }
           />
-          <Details figures={details} />
-          <LabeledOutput label="Take Home:" value={`£${net.toFixed(2)}`} />
+          <Details figures={format(details)} />
+          <LabeledOutput label="Take Home:" value={format(net)} />
         </View>
         <View style={styles.footer}>
           <Ionicons name="ios-mail" size={36} color="dodgerblue" />
