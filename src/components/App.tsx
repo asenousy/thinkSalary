@@ -8,26 +8,13 @@ import {
   Keyboard,
   TextInput,
   Text,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import LabeledOutput from "./LabeledOutput";
 import Details from "./Details";
+import Configs from "./Configs";
 import calculate from "../calculator";
-
-const initialState = {
-  salary: "0",
-  pensionRate: 0,
-  loanPlan: 0,
-};
-
-const reducer = (state: any, action: any) => {
-  switch (action.type) {
-    case "updateSalary":
-      return { ...state, salary: action.value };
-    default:
-      throw new Error("no such action exist");
-  }
-};
 
 const timeUnitsScales = {
   Annual: 1,
@@ -54,21 +41,33 @@ function format(input: any) {
 }
 
 export default function App() {
+  const [salary, setSalary] = useState("0");
   const [segment, setSegment] = useState(0);
   const [picker, setPicker] = useState(0);
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { salary, pensionRate, loanPlan } = state;
-  const annualSalary = salary * scaleUnits[picker];
+  const [showConfigs, setShowConfigs] = useState(false);
+  const [configs, setConfings] = useState({
+    loanPlan: 0,
+    pensionRate: "0",
+    scotlandTax: false,
+  });
+  const annualSalary = +salary * scaleUnits[picker];
   const unit = scaleUnits[segment];
   const { net, ...details } = calculate(
     annualSalary,
-    pensionRate,
-    loanPlan,
+    +configs.pensionRate,
+    configs.loanPlan,
     unit
   );
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
+        <Configs
+          visible={showConfigs}
+          configs={configs}
+          onBackgroundPress={() => setShowConfigs(!showConfigs)}
+          onChange={(name, value) => setConfings({ ...configs, [name]: value })}
+        />
         <View style={styles.center}>
           <View style={styles.salary}>
             <Text style={styles.label}>Salary:</Text>
@@ -76,9 +75,7 @@ export default function App() {
               style={styles.input}
               keyboardType="numeric"
               clearButtonMode={"while-editing"}
-              onEndEditing={({ nativeEvent }) =>
-                dispatch({ type: "updateSalary", value: nativeEvent.text })
-              }
+              onEndEditing={({ nativeEvent }) => setSalary(nativeEvent.text)}
             />
             <Picker
               selectedValue={picker}
@@ -107,7 +104,9 @@ export default function App() {
         </View>
         <View style={styles.footer}>
           <Ionicons name="ios-mail" size={36} color="dodgerblue" />
-          <Ionicons name="ios-settings" size={36} color="dodgerblue" />
+          <Pressable onPress={() => setShowConfigs((prev) => !prev)}>
+            <Ionicons name="ios-settings" size={36} color="dodgerblue" />
+          </Pressable>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -121,9 +120,11 @@ const styles = StyleSheet.create({
   },
   center: { flexGrow: 1, justifyContent: "center", alignItems: "center" },
   footer: {
+    zIndex: 2,
     padding: 20,
     flexDirection: "row",
     justifyContent: "space-between",
+    backgroundColor: "aliceblue",
   },
   segment: {
     margin: 20,

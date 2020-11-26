@@ -10,6 +10,7 @@ export default function Main() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <AdMobBanner
+        style={{ zIndex: 5 }}
         adUnitID="ca-app-pub-3940256099942544/6300978111"
         servePersonalizedAds
       />
