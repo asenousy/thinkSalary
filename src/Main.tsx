@@ -9,12 +9,14 @@ export default function Main() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <AdMobBanner
-        style={{ zIndex: 5 }}
-        adUnitID="ca-app-pub-3940256099942544/6300978111"
-        servePersonalizedAds
-      />
-      <App />
+      <View style={styles.wrapper}>
+        <AdMobBanner
+          style={{ zIndex: 1 }}
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          servePersonalizedAds
+        />
+        <App />
+      </View>
     </View>
   );
 }
@@ -23,5 +25,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
+  },
+  wrapper: {
+    flex: 1,
   },
 });

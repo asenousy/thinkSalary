@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { Picker } from "@react-native-community/picker";
 import {
@@ -10,11 +10,12 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import LabeledOutput from "./LabeledOutput";
+import { colours } from "../constants.json";
+import { Feather } from "@expo/vector-icons";
 import Details from "./Details";
 import Configs from "./Configs";
 import calculate from "../calculator";
+import ContactUs from "./ContactUs";
 
 const timeUnitsScales = {
   Annual: 1,
@@ -45,6 +46,7 @@ export default function App() {
   const [segment, setSegment] = useState(0);
   const [picker, setPicker] = useState(0);
   const [showConfigs, setShowConfigs] = useState(false);
+  const [showContactUs, setShowContactUs] = useState(false);
   const [configs, setConfings] = useState({
     loanPlan: 0,
     pensionRate: "0",
@@ -52,27 +54,22 @@ export default function App() {
   });
   const annualSalary = +salary * scaleUnits[picker];
   const unit = scaleUnits[segment];
-  const { net, ...details } = calculate(
-    annualSalary,
-    +configs.pensionRate,
-    configs.loanPlan,
-    unit
-  );
+  const { net, ...details } = calculate({
+    salary: annualSalary,
+    scotlandTax: configs.scotlandTax,
+    pensionRate: +configs.pensionRate,
+    loanPlan: configs.loanPlan,
+    unit: unit,
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Configs
-          visible={showConfigs}
-          configs={configs}
-          onBackgroundPress={() => setShowConfigs(!showConfigs)}
-          onChange={(name, value) => setConfings({ ...configs, [name]: value })}
-        />
         <View style={styles.center}>
           <View style={styles.salary}>
-            <Text style={styles.label}>Salary:</Text>
             <TextInput
               style={styles.input}
+              placeholder="Enter Salary..."
               keyboardType="numeric"
               clearButtonMode={"while-editing"}
               onEndEditing={({ nativeEvent }) => setSalary(nativeEvent.text)}
@@ -94,20 +91,47 @@ export default function App() {
           <SegmentedControl
             style={styles.segment}
             values={timeUnits}
+            fontStyle={{ fontSize: 13 }}
             selectedIndex={segment}
             onChange={({ nativeEvent }) =>
               setSegment(nativeEvent.selectedSegmentIndex)
             }
           />
           <Details figures={format(details)} />
-          <LabeledOutput label="Take Home:" value={format(net)} />
+          <View style={styles.takeHome}>
+            <Text style={styles.takeHomeText}>You're taking home:</Text>
+            <Text style={styles.takeHomeText}>{format(net)}</Text>
+          </View>
         </View>
-        <View style={styles.footer}>
-          <Ionicons name="ios-mail" size={36} color="dodgerblue" />
-          <Pressable onPress={() => setShowConfigs((prev) => !prev)}>
-            <Ionicons name="ios-settings" size={36} color="dodgerblue" />
+        <View style={styles.contactUs}>
+          <Pressable onPress={() => setShowContactUs((prev) => !prev)}>
+            <Feather style={styles.icon} name="mail" size={36} color="white" />
           </Pressable>
         </View>
+        <View style={styles.configs}>
+          <Pressable onPress={() => setShowConfigs((prev) => !prev)}>
+            <Feather
+              style={styles.icon}
+              name="settings"
+              size={36}
+              color="white"
+            />
+          </Pressable>
+        </View>
+        {showConfigs && (
+          <Configs
+            configs={configs}
+            onBackgroundPress={() => setShowConfigs((prev) => !prev)}
+            onChange={(name, value) =>
+              setConfings({ ...configs, [name]: value })
+            }
+          />
+        )}
+        {showContactUs && (
+          <ContactUs
+            onBackgroundPress={() => setShowContactUs((prev) => !prev)}
+          />
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -116,42 +140,63 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "aliceblue",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: colours.background,
+    justifyContent: "center",
   },
-  center: { flexGrow: 1, justifyContent: "center", alignItems: "center" },
-  footer: {
-    zIndex: 2,
-    padding: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "aliceblue",
+  center: {
+    alignItems: "center",
+  },
+  takeHome: {
+    margin: 10,
+    alignItems: "center",
+  },
+  takeHomeText: {
+    fontWeight: "bold",
+    fontSize: 23,
+    margin: 5,
+  },
+  contactUs: {
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    margin: 30,
+  },
+  configs: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    margin: 30,
   },
   segment: {
-    margin: 20,
+    margin: 10,
     width: 300,
+    padding: 17,
   },
   salary: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
   },
-  picker: {
-    fontSize: 15,
-    width: 100,
-    height: 120,
-  },
-  label: {
-    fontSize: 15,
-  },
   input: {
-    margin: 20,
+    margin: 5,
     fontSize: 15,
     borderRadius: 2,
     borderWidth: 0.3,
-    borderColor: "dodgerblue",
+    borderColor: colours.border,
     backgroundColor: "white",
     textAlign: "center",
     height: 30,
     width: 120,
+  },
+  picker: {
+    margin: 5,
+    fontSize: 15,
+    width: 100,
+    height: 120,
+  },
+  icon: {
+    color: colours.border,
   },
 });

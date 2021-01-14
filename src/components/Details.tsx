@@ -1,5 +1,6 @@
-import React, { FC, useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import React, { FC } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { colours } from "../constants.json";
 
 type Details = {
   gross: number;
@@ -15,22 +16,33 @@ type Props = {
 };
 
 const Details: FC<Props> = (props) => {
-  const [show, setShow] = useState(false);
   const { gross, pension, loan, taxable, tax, ni } = props.figures;
   return (
     <View style={styles.container}>
-      <View style={{ ...styles.box, ...(show ? {} : { height: 40 }) }}>
-        <Button
-          color="black"
-          title={`${show ? "hide" : "show"} details`}
-          onPress={() => setShow(!show)}
-        />
-        <Text style={styles.line}>{`Gross Salary: ${gross}`}</Text>
-        <Text style={styles.line}>{`Pension: ${pension}`}</Text>
-        <Text style={styles.line}>{`Student Loan: ${loan}`}</Text>
-        <Text style={styles.line}>{`Taxable Amount: ${taxable}`}</Text>
-        <Text style={styles.line}>{`Tax: ${tax}`}</Text>
-        <Text style={styles.line}>{`National Insurance: ${ni}`}</Text>
+      <Text style={styles.title}>Details</Text>
+      <View style={styles.row}>
+        <Text style={styles.text}>Gross Salary:</Text>
+        <Text style={styles.text}>{gross}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>Pension:</Text>
+        <Text style={styles.text}>{pension}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>Student Loan:</Text>
+        <Text style={styles.text}>{loan}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>Taxable Amount:</Text>
+        <Text style={styles.text}>{taxable}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>Tax:</Text>
+        <Text style={styles.text}>{tax}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.text}>National Insurance:</Text>
+        <Text style={styles.text}>{ni}</Text>
       </View>
     </View>
   );
@@ -38,16 +50,30 @@ const Details: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-  },
-  box: {
-    backgroundColor: "grey",
+    backgroundColor: colours.content,
+    padding: 15,
+    margin: 10,
     borderRadius: 10,
-    paddingHorizontal: 40,
-    overflow: "hidden",
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    minWidth: 220,
   },
-  line: {
-    padding: 10,
+  title: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  text: {
+    margin: 5,
   },
 });
 

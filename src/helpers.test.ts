@@ -2,7 +2,7 @@ jest.mock("react-native", () => ({
   Dimensions: { get: () => ({ height: 1100 }) },
 }));
 
-import { responsive } from "./helpers.test";
+import { responsive } from "./helpers";
 
 test("responsive", () => {
   const style = { container: { color: "yellow", width: 10 } };
