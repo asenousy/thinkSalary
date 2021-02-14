@@ -17,12 +17,13 @@
     "ios": {
       "supportsTablet": true,
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713" // sample id, replace with your own
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
       }
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713" // sample id, replace with your own
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
       }
     },
     "web": {

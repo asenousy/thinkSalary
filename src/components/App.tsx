@@ -1,3 +1,5 @@
+import "intl";
+import "intl/locale-data/jsonp/en";
 import React, { useState } from "react";
 import SegmentedControl from "@react-native-community/segmented-control";
 import { Picker } from "@react-native-community/picker";
@@ -9,6 +11,7 @@ import {
   TextInput,
   Text,
   Pressable,
+  Platform,
 } from "react-native";
 import { colours } from "../constants.json";
 import { Feather } from "@expo/vector-icons";
@@ -75,8 +78,10 @@ export default function App() {
               onEndEditing={({ nativeEvent }) => setSalary(nativeEvent.text)}
             />
             <Picker
+              style={styles.picker}
+              mode="dropdown"
               selectedValue={picker}
-              itemStyle={styles.picker}
+              itemStyle={styles.pickerItem}
               onValueChange={(val, i) => setPicker(i)}
             >
               {timeUnits.map((timeUnit, i) => (
@@ -173,7 +178,7 @@ const styles = StyleSheet.create({
   segment: {
     margin: 10,
     width: 300,
-    padding: 17,
+    ...(Platform.OS === "ios" ? { padding: 17 } : {}),
   },
   salary: {
     flexDirection: "row",
@@ -191,6 +196,9 @@ const styles = StyleSheet.create({
     width: 120,
   },
   picker: {
+    ...(Platform.OS === "android" ? { width: 125 } : {}),
+  },
+  pickerItem: {
     margin: 5,
     fontSize: 15,
     width: 100,

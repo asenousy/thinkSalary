@@ -54,12 +54,6 @@ const styles = StyleSheet.create({
     padding: 15,
     margin: 10,
     borderRadius: 10,
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
     minWidth: 220,
   },
   title: {

@@ -6,11 +6,12 @@ import {
   TextInput,
   Switch,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 import { colours } from "../constants.json";
 import { Picker } from "@react-native-community/picker";
 
-const plans = ["none", "one", "two", "post graduate"];
+const plans = ["none", "one", "two", "post grad"];
 
 type ConfigsProps = {
   onBackgroundPress: () => void;
@@ -34,7 +35,7 @@ export default function Configs(props: ConfigsProps) {
         <View style={styles.row}>
           <Text style={styles.label}>Scotland Tax :</Text>
           <Switch
-            style={styles.input}
+            style={styles.switch}
             value={scotlandTax}
             onValueChange={(val) => onChange("scotlandTax", val)}
           />
@@ -42,9 +43,10 @@ export default function Configs(props: ConfigsProps) {
         <View style={styles.row}>
           <Text style={styles.label}>Student Plan:</Text>
           <Picker
-            style={styles.input}
+            style={styles.picker}
+            mode="dropdown"
             selectedValue={loanPlan}
-            itemStyle={styles.picker}
+            itemStyle={styles.pickerItem}
             onValueChange={(val, i) => onChange("loanPlan", i)}
           >
             {plans.map((plan, i) => (
@@ -97,7 +99,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: 15,
   },
-  input: {
+  picker: {
+    ...(Platform.OS === "android" ? { width: 132 } : {}),
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  switch: {
     marginHorizontal: 10,
   },
   pensionInput: {
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 80,
   },
-  picker: {
+  pickerItem: {
     fontSize: 15,
     width: 100,
     height: 120,
