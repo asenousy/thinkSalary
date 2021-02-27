@@ -37,7 +37,7 @@ function currency(figure: number) {
   }).format(figure);
 }
 function format(input: any) {
-  if (typeof input === "number") return currency(input);
+  if (typeof input !== "object") return currency(+input);
   return Object.entries(input).reduce((fixed, [key, value]) => {
     fixed[key] = currency(value as number);
     return fixed;
@@ -45,7 +45,8 @@ function format(input: any) {
 }
 
 export default function App() {
-  const [salary, setSalary] = useState("0");
+  const [salary, setSalary] = useState("");
+  const [inputSalary, setInputSalary] = useState("");
   const [segment, setSegment] = useState(0);
   const [picker, setPicker] = useState(0);
   const [showConfigs, setShowConfigs] = useState(false);
@@ -72,10 +73,19 @@ export default function App() {
           <View style={styles.salary}>
             <TextInput
               style={styles.input}
+              value={inputSalary}
               placeholder="Enter Salary..."
               keyboardType="numeric"
               clearButtonMode={"while-editing"}
-              onEndEditing={({ nativeEvent }) => setSalary(nativeEvent.text)}
+              onChangeText={(text) => setInputSalary(text)}
+              onFocus={() =>
+                setInputSalary(inputSalary.replace(",", "").replace("£", ""))
+              }
+              onEndEditing={({ nativeEvent }) => {
+                const formatted = format(nativeEvent.text).replace(".00", "");
+                setInputSalary(formatted === "£0" ? "" : formatted);
+                setSalary(nativeEvent.text);
+              }}
             />
             <Picker
               style={styles.picker}
