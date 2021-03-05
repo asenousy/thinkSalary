@@ -19,6 +19,7 @@ import Details from "./Details";
 import Configs from "./Configs";
 import calculate from "../calculator";
 import ContactUs from "./ContactUs";
+import { responsive } from "../helpers";
 
 const timeUnitsScales = {
   Annual: 1,
@@ -106,7 +107,7 @@ export default function App() {
           <SegmentedControl
             style={styles.segment}
             values={timeUnits}
-            fontStyle={{ fontSize: 13 }}
+            fontStyle={responsive({ fontSize: 13 })}
             selectedIndex={segment}
             onChange={({ nativeEvent }) =>
               setSegment(nativeEvent.selectedSegmentIndex)
@@ -120,7 +121,12 @@ export default function App() {
         </View>
         <View style={styles.contactUs}>
           <Pressable onPress={() => setShowContactUs((prev) => !prev)}>
-            <Feather style={styles.icon} name="mail" size={36} color="white" />
+            <Feather
+              style={styles.icon}
+              name="mail"
+              size={responsive(36)}
+              color="white"
+            />
           </Pressable>
         </View>
         <View style={styles.configs}>
@@ -128,7 +134,7 @@ export default function App() {
             <Feather
               style={styles.icon}
               name="settings"
-              size={36}
+              size={responsive(36)}
               color="white"
             />
           </Pressable>
@@ -152,69 +158,71 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: colours.background,
-    justifyContent: "center",
-  },
-  center: {
-    alignItems: "center",
-  },
-  takeHome: {
-    margin: 10,
-    alignItems: "center",
-  },
-  takeHomeText: {
-    fontWeight: "bold",
-    fontSize: 23,
-    margin: 5,
-  },
-  contactUs: {
-    position: "absolute",
-    left: 0,
-    bottom: 0,
-    margin: 30,
-  },
-  configs: {
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    margin: 30,
-  },
-  segment: {
-    margin: 10,
-    width: 300,
-    ...(Platform.OS === "ios" ? { padding: 17 } : {}),
-  },
-  salary: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  input: {
-    margin: 5,
-    fontSize: 15,
-    borderRadius: 2,
-    borderWidth: 0.3,
-    borderColor: colours.border,
-    backgroundColor: "white",
-    textAlign: "center",
-    height: 30,
-    width: 120,
-  },
-  picker: {
-    ...(Platform.OS === "android" ? { width: 125 } : {}),
-  },
-  pickerItem: {
-    margin: 5,
-    fontSize: 15,
-    width: 100,
-    height: 120,
-  },
-  icon: {
-    color: colours.border,
-  },
-});
+const styles = StyleSheet.create(
+  responsive({
+    container: {
+      flex: 1,
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      backgroundColor: colours.background,
+      justifyContent: "center",
+    },
+    center: {
+      alignItems: "center",
+    },
+    takeHome: {
+      margin: 10,
+      alignItems: "center",
+    },
+    takeHomeText: {
+      fontWeight: "bold",
+      fontSize: 23,
+      margin: 5,
+    },
+    contactUs: {
+      position: "absolute",
+      left: 0,
+      bottom: 0,
+      margin: 30,
+    },
+    configs: {
+      position: "absolute",
+      right: 0,
+      bottom: 0,
+      margin: 30,
+    },
+    segment: {
+      margin: 10,
+      width: 300,
+      ...(Platform.OS === "ios" ? { padding: 17 } : {}),
+    },
+    salary: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    input: {
+      margin: 5,
+      fontSize: 15,
+      borderRadius: 2,
+      borderWidth: 0.3,
+      borderColor: colours.border,
+      backgroundColor: "white",
+      textAlign: "center",
+      height: 30,
+      width: 120,
+    },
+    picker: {
+      ...(Platform.OS === "android" ? { width: 125 } : {}),
+    },
+    pickerItem: {
+      margin: 5,
+      fontSize: 15,
+      width: 100,
+      height: 120,
+    },
+    icon: {
+      color: colours.border,
+    },
+  })
+);

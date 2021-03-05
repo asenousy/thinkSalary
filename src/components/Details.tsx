@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { colours } from "../constants.json";
+import { responsive } from "../helpers";
 
 type Details = {
   gross: number;
@@ -48,27 +49,30 @@ const Details: FC<Props> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colours.content,
-    padding: 15,
-    margin: 10,
-    borderRadius: 10,
-    minWidth: 220,
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  text: {
-    margin: 5,
-  },
-});
+const styles = StyleSheet.create(
+  responsive({
+    container: {
+      backgroundColor: colours.content,
+      padding: 15,
+      margin: 10,
+      borderRadius: 10,
+      minWidth: 220,
+    },
+    title: {
+      fontWeight: "bold",
+      fontSize: 16,
+      marginBottom: 10,
+      textAlign: "center",
+    },
+    row: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    text: {
+      margin: 5,
+      fontSize: 13,
+    },
+  })
+);
 
 export default Details;

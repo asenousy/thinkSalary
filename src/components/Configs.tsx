@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { colours } from "../constants.json";
 import { Picker } from "@react-native-community/picker";
+import { responsive } from "../helpers";
 
 const plans = ["none", "one", "two", "post grad"];
 
@@ -69,58 +70,60 @@ export default function Configs(props: ConfigsProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    flexDirection: "row",
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  dimLayer: {
-    position: "absolute",
-    backgroundColor: "black",
-    opacity: 0.5,
-    width: "100%",
-    height: "100%",
-  },
-  modal: {
-    borderRadius: 10,
-    padding: 40,
-    alignItems: "center",
-    backgroundColor: colours.background,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  label: {
-    marginHorizontal: 10,
-    fontSize: 15,
-  },
-  picker: {
-    ...(Platform.OS === "android" ? { width: 132 } : {}),
-    alignItems: "center",
-    marginHorizontal: 10,
-  },
-  switch: {
-    marginHorizontal: 10,
-  },
-  pensionInput: {
-    marginHorizontal: 10,
-    fontSize: 15,
-    borderRadius: 2,
-    borderWidth: 0.3,
-    borderColor: colours.border,
-    backgroundColor: "white",
-    textAlign: "center",
-    height: 30,
-    width: 80,
-  },
-  pickerItem: {
-    fontSize: 15,
-    width: 100,
-    height: 120,
-  },
-});
+const styles = StyleSheet.create(
+  responsive({
+    container: {
+      position: "absolute",
+      flexDirection: "row",
+      width: "100%",
+      height: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    dimLayer: {
+      position: "absolute",
+      backgroundColor: "black",
+      opacity: 0.5,
+      width: "100%",
+      height: "100%",
+    },
+    modal: {
+      borderRadius: 10,
+      padding: 40,
+      alignItems: "center",
+      backgroundColor: colours.background,
+    },
+    row: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    label: {
+      marginHorizontal: 10,
+      fontSize: 15,
+    },
+    picker: {
+      ...(Platform.OS === "android" ? { width: 132 } : {}),
+      alignItems: "center",
+      marginHorizontal: 10,
+    },
+    switch: {
+      marginHorizontal: 10,
+    },
+    pensionInput: {
+      marginHorizontal: 10,
+      fontSize: 15,
+      borderRadius: 2,
+      borderWidth: 0.3,
+      borderColor: colours.border,
+      backgroundColor: "white",
+      textAlign: "center",
+      height: 30,
+      width: 80,
+    },
+    pickerItem: {
+      fontSize: 15,
+      width: 100,
+      height: 120,
+    },
+  })
+);

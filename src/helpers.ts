@@ -7,7 +7,7 @@ let scaleFactor = 1;
 if (height >= heightBreakPoint.large) scaleFactor = 1.4;
 if (height >= heightBreakPoint.xLarge) scaleFactor = 1.8;
 
-function scaleUp(styles) {
+function scaleUp(styles: any): any {
   return Object.entries(styles)
     .map(([key, value]) => ({
       [key]:
@@ -20,7 +20,7 @@ function scaleUp(styles) {
     .reduce((newStyles, style) => ({ ...newStyles, ...style }), {});
 }
 
-export const responsive = (styles) => {
+export const responsive = (styles: any) => {
   if (typeof styles === "number") return styles * scaleFactor;
   return scaleUp(styles);
 };

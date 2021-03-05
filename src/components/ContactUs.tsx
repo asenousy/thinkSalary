@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { colours } from "../constants.json";
 import { jsVersion } from "../../configs.json";
+import { responsive } from "../helpers";
 
 type Props = {
   onBackgroundPress: () => void;
@@ -38,41 +39,45 @@ export default (props: Props) => (
   </View>
 );
 
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dimlayer: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "black",
-    opacity: 0.5,
-  },
-  modal: {
-    borderRadius: 10,
-    backgroundColor: colours.background,
-    maxWidth: 285,
-    padding: 10,
-    alignItems: "center",
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 20,
-    margin: 20,
-  },
-  content: {
-    margin: 10,
-  },
-  button: {
-    backgroundColor: "#D8E7EE",
-    borderRadius: 10,
-    margin: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-});
+const styles = StyleSheet.create(
+  responsive({
+    container: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    dimlayer: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "black",
+      opacity: 0.5,
+    },
+    modal: {
+      borderRadius: 10,
+      backgroundColor: colours.background,
+      maxWidth: 285,
+      padding: 10,
+      alignItems: "center",
+    },
+    title: {
+      fontWeight: "bold",
+      fontSize: 20,
+      margin: 20,
+    },
+    content: {
+      margin: 10,
+      fontSize: 13,
+    },
+    button: {
+      backgroundColor: "#D8E7EE",
+      fontSize: 13,
+      borderRadius: 10,
+      margin: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+    },
+  })
+);
