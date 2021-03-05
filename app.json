@@ -24,10 +24,12 @@
       "bundleIdentifier": "com.asenousy.think-salary"
     },
     "android": {
+      "icon": "./assets/icon-android.png",
       "softwareKeyboardLayoutMode": "pan",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
-      }
+      },
+      "package": "com.asenousy.thinksalary"
     },
     "web": {
       "favicon": "./assets/favicon.png"
