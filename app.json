@@ -30,9 +30,6 @@
         "googleMobileAdsAppId": "{{AD_UNIT_ID_ANDROID}}"
       },
       "package": "com.asenousy.thinksalary"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }
