@@ -54,7 +54,7 @@ export default function App() {
   const [showContactUs, setShowContactUs] = useState(false);
   const [configs, setConfings] = useState({
     loanPlan: 0,
-    pensionRate: "0",
+    pensionRate: "",
     scotlandTax: false,
   });
   const annualSalary = +salary * scaleUnits[picker];
