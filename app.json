@@ -21,6 +21,7 @@
       "config": {
         "googleMobileAdsAppId": "{{AD_UNIT_ID_IOS}}"
       },
+      "appStoreUrl": "https://apps.apple.com/us/app/thinksalary/id1556930096",
       "bundleIdentifier": "com.asenousy.think-salary"
     },
     "android": {
@@ -29,7 +30,8 @@
       "config": {
         "googleMobileAdsAppId": "{{AD_UNIT_ID_ANDROID}}"
       },
-      "package": "com.asenousy.thinksalary"
+      "package": "com.asenousy.thinksalary",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.asenousy.thinksalary"
     }
   }
 }

@@ -89,7 +89,7 @@ export default function App() {
               }}
             />
             <Picker
-              style={styles.picker}
+              style={Platform.OS === "android" ? { width: 120 } : {}}
               mode="dropdown"
               selectedValue={picker}
               itemStyle={styles.pickerItem}
@@ -211,9 +211,6 @@ const styles = StyleSheet.create(
       textAlign: "center",
       height: 30,
       width: 120,
-    },
-    picker: {
-      ...(Platform.OS === "android" ? { width: 125 } : {}),
     },
     pickerItem: {
       margin: 5,

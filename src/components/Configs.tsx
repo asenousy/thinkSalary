@@ -44,7 +44,10 @@ export default function Configs(props: ConfigsProps) {
         <View style={styles.row}>
           <Text style={styles.label}>Student Plan:</Text>
           <Picker
-            style={styles.picker}
+            style={{
+              ...styles.picker,
+              ...(Platform.OS === "android" ? { width: 100 } : {}),
+            }}
             mode="dropdown"
             selectedValue={loanPlan}
             itemStyle={styles.pickerItem}
@@ -102,7 +105,6 @@ const styles = StyleSheet.create(
       fontSize: 15,
     },
     picker: {
-      ...(Platform.OS === "android" ? { width: 132 } : {}),
       alignItems: "center",
       marginHorizontal: 10,
     },
