@@ -161,7 +161,7 @@ export default function App() {
 const styles = StyleSheet.create(
   responsive({
     container: {
-      paddingTop: 30,
+      paddingTop: 25,
       flex: 1,
       position: "absolute",
       width: "100%",
