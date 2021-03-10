@@ -3,6 +3,7 @@
     "name": "thinkSalary",
     "slug": "think-salary",
     "version": "1.0.0",
+    "privacy": "public",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
