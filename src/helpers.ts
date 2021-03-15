@@ -3,10 +3,12 @@ import { heightBreakPoint } from "../configs.json";
 
 const { height } = Dimensions.get("window");
 
-let scaleFactor = 1;
-if (height < heightBreakPoint.small) scaleFactor = 0.85;
-if (height >= heightBreakPoint.large) scaleFactor = 1.4;
-if (height >= heightBreakPoint.xLarge) scaleFactor = 1.8;
+let scaleFactor = 1.15;
+if (height < heightBreakPoint.small) scaleFactor = 1;
+if (height < heightBreakPoint.xSmall) scaleFactor = 0.89;
+if (height < heightBreakPoint.xxSmall) scaleFactor = 0.76;
+if (height > heightBreakPoint.large) scaleFactor = 1.4;
+if (height > heightBreakPoint.xLarge) scaleFactor = 1.8;
 
 function scaleUp(styles: any): any {
   return Object.entries(styles)
@@ -15,7 +17,9 @@ function scaleUp(styles: any): any {
         typeof value === "object"
           ? scaleUp(value)
           : typeof value === "number"
-          ? value * scaleFactor
+          ? key === "fontSize" && scaleFactor < 0.85
+            ? value * 0.87
+            : value * scaleFactor
           : value,
     }))
     .reduce((newStyles, style) => ({ ...newStyles, ...style }), {});

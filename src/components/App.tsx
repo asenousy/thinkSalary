@@ -161,7 +161,6 @@ export default function App() {
 const styles = StyleSheet.create(
   responsive({
     container: {
-      paddingTop: 25,
       flex: 1,
       position: "absolute",
       width: "100%",
@@ -195,7 +194,7 @@ const styles = StyleSheet.create(
     },
     segment: {
       margin: 10,
-      width: 300,
+      width: 315,
       ...(Platform.OS === "ios" ? { padding: 17 } : {}),
     },
     salary: {
