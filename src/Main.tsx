@@ -15,10 +15,7 @@ const AD_UNIT_ID = __DEV__
 
 export default function Main() {
   const appState = useState(AppState.currentState);
-  const handleAppStateChangeCurried = (handleAppStateChange.bind as any)(
-    null,
-    appState
-  );
+  const handleAppStateChangeCurried = handleAppStateChange.bind(null, appState);
 
   useEffect(() => {
     AppState.addEventListener("change", handleAppStateChangeCurried);
@@ -39,7 +36,10 @@ export default function Main() {
 }
 
 const handleAppStateChange = async (
-  [appState, setAppState]: any,
+  [appState, setAppState]: [
+    AppStateStatus,
+    React.Dispatch<React.SetStateAction<AppStateStatus>>
+  ],
   nextAppState: AppStateStatus
 ) => {
   if (

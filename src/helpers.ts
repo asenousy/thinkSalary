@@ -1,3 +1,5 @@
+import "intl";
+import "intl/locale-data/jsonp/en";
 import { Dimensions } from "react-native";
 import { heightBreakPoint } from "../configs.json";
 
@@ -29,3 +31,18 @@ export const responsive = (styles: any) => {
   if (typeof styles === "number") return styles * scaleFactor;
   return scaleUp(styles);
 };
+
+function currency(figure: number) {
+  return new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+  }).format(figure);
+}
+
+export function format(input: any) {
+  if (typeof input !== "object") return currency(+input);
+  return Object.entries(input).reduce((fixed, [key, value]) => {
+    fixed[key] = currency(value as number);
+    return fixed;
+  }, {} as any);
+}

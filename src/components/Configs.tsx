@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Props } from "react";
 import {
   StyleSheet,
   View,
@@ -16,7 +16,7 @@ const plans = ["none", "one", "two", "post grad"];
 
 type ConfigsProps = {
   onBackgroundPress: () => void;
-  onChange: (name: string, value: any) => void;
+  onChange: (name: string, value: string | number | boolean) => void;
   configs: { loanPlan: number; pensionRate: string; scotlandTax: boolean };
 };
 
@@ -33,45 +33,72 @@ export default function Configs(props: ConfigsProps) {
         <View style={styles.dimLayer} />
       </TouchableWithoutFeedback>
       <View style={styles.modal}>
-        <View style={styles.row}>
-          <Text style={styles.label}>Scotland Tax :</Text>
-          <Switch
-            style={styles.switch}
-            value={scotlandTax}
-            onValueChange={(val) => onChange("scotlandTax", val)}
-          />
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Student Plan:</Text>
-          <Picker
-            style={{
-              ...styles.picker,
-              ...(Platform.OS === "android" ? { width: 100 } : {}),
-            }}
-            mode="dropdown"
-            selectedValue={loanPlan}
-            itemStyle={styles.pickerItem}
-            onValueChange={(val, i) => onChange("loanPlan", i)}
-          >
-            {plans.map((plan, i) => (
-              <Picker.Item key={`plan-${plan}`} label={plan} value={i} />
-            ))}
-          </Picker>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.label}>Pension % :</Text>
-          <TextInput
-            style={styles.pensionInput}
-            value={pensionRate}
-            keyboardType="numeric"
-            clearButtonMode="while-editing"
-            onChangeText={(text) => onChange("pensionRate", text)}
-          />
-        </View>
+        <ScotlandTax enabled={scotlandTax} onChange={onChange} />
+        <StudentPlan plan={loanPlan} onChange={onChange} />
+        <Pension rate={pensionRate} onChange={onChange} />
       </View>
     </View>
   );
 }
+
+type ScotlandTaxProps = {
+  enabled: boolean;
+  onChange: ConfigsProps["onChange"];
+};
+
+const ScotlandTax = ({ enabled, onChange }: ScotlandTaxProps) => (
+  <View style={styles.row}>
+    <Text style={styles.label}>Scotland Tax :</Text>
+    <Switch
+      style={styles.switch}
+      value={enabled}
+      onValueChange={(val) => onChange("scotlandTax", val)}
+    />
+  </View>
+);
+
+type StudentPlanProps = {
+  plan: number;
+  onChange: ConfigsProps["onChange"];
+};
+
+const StudentPlan = ({ plan, onChange }: StudentPlanProps) => (
+  <View style={styles.row}>
+    <Text style={styles.label}>Student Plan:</Text>
+    <Picker
+      style={{
+        ...styles.picker,
+        ...(Platform.OS === "android" ? { width: 100 } : {}),
+      }}
+      mode="dropdown"
+      selectedValue={plan}
+      itemStyle={styles.pickerItem}
+      onValueChange={(val, i) => onChange("loanPlan", i)}
+    >
+      {plans.map((plan, i) => (
+        <Picker.Item key={`plan-${plan}`} label={plan} value={i} />
+      ))}
+    </Picker>
+  </View>
+);
+
+type PensionProps = {
+  rate: string;
+  onChange: ConfigsProps["onChange"];
+};
+
+const Pension = ({ rate, onChange }: PensionProps) => (
+  <View style={styles.row}>
+    <Text style={styles.label}>Pension % :</Text>
+    <TextInput
+      style={styles.pensionInput}
+      value={rate}
+      keyboardType="numeric"
+      clearButtonMode="while-editing"
+      onChangeText={(text) => onChange("pensionRate", text)}
+    />
+  </View>
+);
 
 const styles = StyleSheet.create(
   responsive({

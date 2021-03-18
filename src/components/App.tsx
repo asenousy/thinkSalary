@@ -1,25 +1,22 @@
-import "intl";
-import "intl/locale-data/jsonp/en";
 import React, { useState } from "react";
 import SegmentedControl from "@react-native-community/segmented-control";
-import { Picker } from "@react-native-community/picker";
 import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
   Keyboard,
-  TextInput,
   Text,
-  Pressable,
   Platform,
 } from "react-native";
+import { responsive, format } from "../helpers";
 import { colours } from "../constants.json";
-import { Feather } from "@expo/vector-icons";
 import Details from "./Details";
 import Configs from "./Configs";
 import calculate from "../calculator";
 import ContactUs from "./ContactUs";
-import { responsive } from "../helpers";
+import SalaryInput from "./SalaryInput";
+import ConfigsIcon from "./ConfigsIcon";
+import ContactUsIcon from "./ContactUsIcon";
 
 const timeUnitsScales = {
   Annual: 1,
@@ -31,23 +28,8 @@ const timeUnitsScales = {
 const timeUnits = Object.keys(timeUnitsScales);
 const scaleUnits = Object.values(timeUnitsScales);
 
-function currency(figure: number) {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
-  }).format(figure);
-}
-function format(input: any) {
-  if (typeof input !== "object") return currency(+input);
-  return Object.entries(input).reduce((fixed, [key, value]) => {
-    fixed[key] = currency(value as number);
-    return fixed;
-  }, {} as any);
-}
-
 export default function App() {
   const [salary, setSalary] = useState("");
-  const [inputSalary, setInputSalary] = useState("");
   const [segment, setSegment] = useState(0);
   const [picker, setPicker] = useState(0);
   const [showConfigs, setShowConfigs] = useState(false);
@@ -71,39 +53,12 @@ export default function App() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.center}>
-          <View style={styles.salary}>
-            <TextInput
-              style={styles.input}
-              value={inputSalary}
-              placeholder="Enter Salary..."
-              keyboardType="numeric"
-              clearButtonMode={"while-editing"}
-              onChangeText={(text) => setInputSalary(text)}
-              onFocus={() =>
-                setInputSalary(inputSalary.replace(",", "").replace("£", ""))
-              }
-              onEndEditing={({ nativeEvent }) => {
-                const formatted = format(nativeEvent.text).replace(".00", "");
-                setInputSalary(formatted === "£0" ? "" : formatted);
-                setSalary(nativeEvent.text);
-              }}
-            />
-            <Picker
-              style={Platform.OS === "android" ? { width: 120 } : {}}
-              mode="dropdown"
-              selectedValue={picker}
-              itemStyle={styles.pickerItem}
-              onValueChange={(val, i) => setPicker(i)}
-            >
-              {timeUnits.map((timeUnit, i) => (
-                <Picker.Item
-                  key={`picker-${timeUnit}`}
-                  label={timeUnit}
-                  value={i}
-                />
-              ))}
-            </Picker>
-          </View>
+          <SalaryInput
+            onSalaryChange={setSalary}
+            timeUnit={picker}
+            timeUnits={timeUnits}
+            onTimeUnitChange={setPicker}
+          />
           <SegmentedControl
             style={styles.segment}
             values={timeUnits}
@@ -114,31 +69,10 @@ export default function App() {
             }
           />
           <Details figures={format(details)} />
-          <View style={styles.takeHome}>
-            <Text style={styles.takeHomeText}>You're taking home:</Text>
-            <Text style={styles.takeHomeText}>{format(net)}</Text>
-          </View>
+          <TakeHome amount={net} />
         </View>
-        <View style={styles.contactUs}>
-          <Pressable onPress={() => setShowContactUs((prev) => !prev)}>
-            <Feather
-              style={styles.icon}
-              name="mail"
-              size={responsive(36)}
-              color="white"
-            />
-          </Pressable>
-        </View>
-        <View style={styles.configs}>
-          <Pressable onPress={() => setShowConfigs((prev) => !prev)}>
-            <Feather
-              style={styles.icon}
-              name="settings"
-              size={responsive(36)}
-              color="white"
-            />
-          </Pressable>
-        </View>
+        <ContactUsIcon onClick={() => setShowContactUs((prev) => !prev)} />
+        <ConfigsIcon onClick={() => setShowConfigs((prev) => !prev)} />
         {showConfigs && (
           <Configs
             configs={configs}
@@ -157,6 +91,13 @@ export default function App() {
     </TouchableWithoutFeedback>
   );
 }
+
+const TakeHome = (props: { amount: string }) => (
+  <View style={styles.takeHome}>
+    <Text style={styles.takeHomeText}>You're taking home:</Text>
+    <Text style={styles.takeHomeText}>{format(props.amount)}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create(
   responsive({
@@ -180,46 +121,10 @@ const styles = StyleSheet.create(
       fontSize: 23,
       margin: 5,
     },
-    contactUs: {
-      position: "absolute",
-      left: 0,
-      bottom: 0,
-      margin: 30,
-    },
-    configs: {
-      position: "absolute",
-      right: 0,
-      bottom: 0,
-      margin: 30,
-    },
     segment: {
       margin: 10,
       width: 315,
       ...(Platform.OS === "ios" ? { padding: 17 } : {}),
-    },
-    salary: {
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    input: {
-      margin: 5,
-      fontSize: 15,
-      borderRadius: 2,
-      borderWidth: 0.3,
-      borderColor: colours.border,
-      backgroundColor: "white",
-      textAlign: "center",
-      height: 30,
-      width: 120,
-    },
-    pickerItem: {
-      margin: 5,
-      fontSize: 15,
-      width: 100,
-      height: 120,
-    },
-    icon: {
-      color: colours.border,
     },
   })
 );
