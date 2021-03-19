@@ -18,16 +18,6 @@ import SalaryInput from "./SalaryInput";
 import ConfigsIcon from "./ConfigsIcon";
 import ContactUsIcon from "./ContactUsIcon";
 
-const timeUnitsScales = {
-  Annual: 1,
-  Monthly: 12,
-  Weekly: 52,
-  Daily: 260,
-  Hourly: 2080,
-};
-const timeUnits = Object.keys(timeUnitsScales);
-const scaleUnits = Object.values(timeUnitsScales);
-
 export default function App() {
   const [salary, setSalary] = useState("");
   const [segment, setSegment] = useState(0);
@@ -36,9 +26,21 @@ export default function App() {
   const [showContactUs, setShowContactUs] = useState(false);
   const [configs, setConfings] = useState({
     loanPlan: 0,
-    pensionRate: "",
+    pensionRate: "0",
     scotlandTax: false,
+    hoursPerWeek: "40",
   });
+
+  const timeUnitsScales = {
+    Annual: 1,
+    Monthly: 12,
+    Weekly: 52,
+    Daily: 260,
+    Hourly: 52 * +configs.hoursPerWeek,
+  };
+  const timeUnits = Object.keys(timeUnitsScales);
+  const scaleUnits = Object.values(timeUnitsScales);
+
   const annualSalary = +salary * scaleUnits[picker];
   const unit = scaleUnits[segment];
   const { net, ...details } = calculate({

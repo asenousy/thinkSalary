@@ -17,14 +17,19 @@ const plans = ["none", "one", "two", "post grad"];
 type ConfigsProps = {
   onBackgroundPress: () => void;
   onChange: (name: string, value: string | number | boolean) => void;
-  configs: { loanPlan: number; pensionRate: string; scotlandTax: boolean };
+  configs: {
+    loanPlan: number;
+    pensionRate: string;
+    scotlandTax: boolean;
+    hoursPerWeek: string;
+  };
 };
 
 export default function Configs(props: ConfigsProps) {
   const {
     onBackgroundPress,
     onChange,
-    configs: { loanPlan, pensionRate, scotlandTax },
+    configs: { loanPlan, pensionRate, scotlandTax, hoursPerWeek },
   } = props;
 
   return (
@@ -36,6 +41,7 @@ export default function Configs(props: ConfigsProps) {
         <ScotlandTax enabled={scotlandTax} onChange={onChange} />
         <StudentPlan plan={loanPlan} onChange={onChange} />
         <Pension rate={pensionRate} onChange={onChange} />
+        <HoursPerWeek hours={hoursPerWeek} onChange={onChange} />
       </View>
     </View>
   );
@@ -91,11 +97,29 @@ const Pension = ({ rate, onChange }: PensionProps) => (
   <View style={styles.row}>
     <Text style={styles.label}>Pension % :</Text>
     <TextInput
-      style={styles.pensionInput}
+      style={styles.input}
       value={rate}
       keyboardType="numeric"
       clearButtonMode="while-editing"
       onChangeText={(text) => onChange("pensionRate", text)}
+    />
+  </View>
+);
+
+type HoursPerWeekProps = {
+  hours: string;
+  onChange: ConfigsProps["onChange"];
+};
+
+const HoursPerWeek = ({ hours, onChange }: HoursPerWeekProps) => (
+  <View style={{ ...styles.row, marginTop: 20 }}>
+    <Text style={styles.label}>Hours Per Week :</Text>
+    <TextInput
+      style={styles.input}
+      value={hours}
+      keyboardType="numeric"
+      clearButtonMode="while-editing"
+      onChangeText={(text) => onChange("hoursPerWeek", text)}
     />
   </View>
 );
@@ -120,12 +144,12 @@ const styles = StyleSheet.create(
     modal: {
       borderRadius: 10,
       padding: 40,
-      alignItems: "center",
       backgroundColor: colours.background,
     },
     row: {
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "space-between",
     },
     label: {
       marginHorizontal: 10,
@@ -133,14 +157,13 @@ const styles = StyleSheet.create(
     },
     picker: {
       alignItems: "center",
-      marginHorizontal: 10,
     },
     switch: {
-      marginHorizontal: 10,
+      marginHorizontal: 20,
     },
-    pensionInput: {
-      marginHorizontal: 10,
+    input: {
       fontSize: 15,
+      marginRight: 10,
       borderRadius: 2,
       borderWidth: 0.3,
       borderColor: colours.border,
