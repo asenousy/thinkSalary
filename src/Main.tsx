@@ -29,7 +29,11 @@ export default function Main() {
       <StatusBar style="auto" />
       <View style={styles.wrapper}>
         <App />
-        <AdMobBanner adUnitID={AD_UNIT_ID} servePersonalizedAds />
+        <AdMobBanner
+          style={{ zIndex: 1 }}
+          adUnitID={AD_UNIT_ID}
+          servePersonalizedAds
+        />
       </View>
     </View>
   );
