@@ -1,38 +1,30 @@
 import React from "react";
 import { View, Pressable, StyleSheet } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { responsive } from "../helpers";
 import { colours } from "../constants.json";
 
-type ContactUsIconProps = {
+type FeedbackIconProps = {
   onClick: () => void;
 };
 
-const ContactUsIcon = (props: ContactUsIconProps) => (
-  <View style={styles.contactUs}>
+const FeedbackIcon = (props: FeedbackIconProps) => (
+  <View style={styles.container}>
     <Pressable onPress={props.onClick}>
-      <Feather
-        style={styles.icon}
-        name="mail"
-        size={responsive(36)}
-        color="white"
-      />
+      <AntDesign name="form" size={responsive(36)} color={colours.border} />
     </Pressable>
   </View>
 );
 
 const styles = StyleSheet.create(
   responsive({
-    contactUs: {
+    container: {
       position: "absolute",
       left: 0,
       bottom: 0,
       margin: 30,
     },
-    icon: {
-      color: colours.border,
-    },
   })
 );
 
-export default ContactUsIcon;
+export default FeedbackIcon;

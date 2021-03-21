@@ -13,10 +13,10 @@ import { colours } from "../constants.json";
 import Details from "./Details";
 import Configs from "./Configs";
 import calculate from "../calculator";
-import ContactUs from "./ContactUs";
+import Feedback from "./Feedback";
 import SalaryInput from "./SalaryInput";
 import ConfigsIcon from "./ConfigsIcon";
-import ContactUsIcon from "./ContactUsIcon";
+import FeedbackIcon from "./FeedbackIcon";
 
 export default function App() {
   const [salary, setSalary] = useState("");
@@ -73,7 +73,7 @@ export default function App() {
           <Details figures={format(details)} />
           <TakeHome amount={net} />
         </View>
-        <ContactUsIcon onClick={() => setShowContactUs((prev) => !prev)} />
+        <FeedbackIcon onClick={() => setShowContactUs((prev) => !prev)} />
         <ConfigsIcon onClick={() => setShowConfigs((prev) => !prev)} />
         {showConfigs && (
           <Configs
@@ -85,7 +85,7 @@ export default function App() {
           />
         )}
         {showContactUs && (
-          <ContactUs
+          <Feedback
             onBackgroundPress={() => setShowContactUs((prev) => !prev)}
           />
         )}

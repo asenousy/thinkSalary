@@ -11,6 +11,7 @@ import {
 import { colours } from "../constants.json";
 import { jsVersion } from "../../configs.json";
 import { responsive } from "../helpers";
+import * as StoreReview from "expo-store-review";
 
 type Props = {
   onBackgroundPress: () => void;
@@ -22,19 +23,32 @@ export default (props: Props) => (
       <View style={styles.dimlayer} />
     </TouchableWithoutFeedback>
     <View style={styles.modal}>
-      <Text style={styles.title}>Contact Us</Text>
       <Text style={styles.content}>
         Would love to hear your suggestions, questions or feedback
       </Text>
-      <Pressable
-        onPress={() =>
-          Linking.openURL(
-            `mailto:hanounasoft+thinkSalary@hotmail.com?subject=thinkSalary-${Platform.OS}-v${jsVersion}`
-          )
-        }
-      >
-        <Text style={styles.button}>Email Us</Text>
-      </Pressable>
+      <View style={styles.row}>
+        <Pressable
+          onPress={() =>
+            Linking.openURL(
+              `mailto:hanounasoft+thinkSalary@hotmail.com?subject=thinkSalary-${Platform.OS}-v${jsVersion}`
+            )
+          }
+        >
+          <Text style={styles.button}>Email Us</Text>
+        </Pressable>
+        <View style={styles.title}>
+          <Text>or</Text>
+        </View>
+        <Pressable
+          onPress={() =>
+            StoreReview.isAvailableAsync()
+              .then((avail) => avail && void StoreReview.requestReview())
+              .catch((err) => __DEV__ && console.error(err))
+          }
+        >
+          <Text style={styles.button}>Review Us</Text>
+        </Pressable>
+      </View>
     </View>
   </View>
 );
@@ -59,13 +73,12 @@ const styles = StyleSheet.create(
       borderRadius: 10,
       backgroundColor: colours.background,
       maxWidth: 285,
-      padding: 10,
+      padding: 20,
       alignItems: "center",
     },
     title: {
-      fontWeight: "bold",
-      fontSize: 20,
-      margin: 20,
+      justifyContent: "center",
+      marginHorizontal: 5,
     },
     content: {
       margin: 10,
@@ -75,9 +88,12 @@ const styles = StyleSheet.create(
       backgroundColor: "#D8E7EE",
       fontSize: 13,
       borderRadius: 10,
-      margin: 20,
+      margin: 10,
       paddingVertical: 10,
       paddingHorizontal: 20,
+    },
+    row: {
+      flexDirection: "row",
     },
   })
 );

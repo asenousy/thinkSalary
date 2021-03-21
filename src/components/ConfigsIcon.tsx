@@ -11,12 +11,7 @@ type ConfigsIconProps = {
 const ConfigsIcon = (props: ConfigsIconProps) => (
   <View style={styles.configs}>
     <Pressable onPress={props.onClick}>
-      <Feather
-        style={styles.icon}
-        name="settings"
-        size={responsive(36)}
-        color="white"
-      />
+      <Feather name="settings" size={responsive(36)} color={colours.border} />
     </Pressable>
   </View>
 );
@@ -28,9 +23,6 @@ const styles = StyleSheet.create(
       right: 0,
       bottom: 0,
       margin: 30,
-    },
-    icon: {
-      color: colours.border,
     },
   })
 );
