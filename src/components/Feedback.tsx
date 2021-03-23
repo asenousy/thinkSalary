@@ -36,9 +36,6 @@ export default (props: Props) => (
         >
           <Text style={styles.button}>Email Us</Text>
         </Pressable>
-        <View style={styles.title}>
-          <Text>or</Text>
-        </View>
         <Pressable
           onPress={() =>
             StoreReview.isAvailableAsync()
@@ -76,17 +73,15 @@ const styles = StyleSheet.create(
       padding: 20,
       alignItems: "center",
     },
-    title: {
-      justifyContent: "center",
-      marginHorizontal: 5,
-    },
     content: {
-      margin: 10,
-      fontSize: 13,
+      lineHeight: 24,
+      marginVertical: 14,
+      fontSize: 16,
+      textAlign: "center",
     },
     button: {
       backgroundColor: "#D8E7EE",
-      fontSize: 13,
+      fontSize: 14,
       borderRadius: 10,
       margin: 10,
       paddingVertical: 10,
