@@ -8,7 +8,7 @@ const { height } = Dimensions.get("window");
 let scaleFactor = 1.12;
 if (height < heightBreakPoint.small) scaleFactor = 1;
 if (height < heightBreakPoint.xSmall) scaleFactor = 0.89;
-if (height < heightBreakPoint.xxSmall) scaleFactor = 0.76;
+if (height < heightBreakPoint.xxSmall) scaleFactor = 0.7;
 if (height > heightBreakPoint.large) scaleFactor = 1.4;
 if (height > heightBreakPoint.xLarge) scaleFactor = 1.8;
 
@@ -18,9 +18,9 @@ function scaleUp(styles: any): any {
       [key]:
         typeof value === "object"
           ? scaleUp(value)
-          : typeof value === "number"
+          : typeof value === "number" && key !== "flex"
           ? key === "fontSize" && scaleFactor < 0.85
-            ? value * 0.87
+            ? value * 0.81
             : value * scaleFactor
           : value,
     }))

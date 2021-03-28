@@ -105,11 +105,11 @@ const TakeHome = (props: { amount: string }) => (
 const styles = StyleSheet.create(
   responsive({
     container: {
-      flex: 2,
+      flex: 1,
       backgroundColor: colours.background,
     },
     center: {
-      flex: 2,
+      flex: 1,
       justifyContent: "center",
       alignItems: "center",
     },
