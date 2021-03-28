@@ -8,6 +8,7 @@ import { AdMobBanner } from "expo-ads-admob";
 import { Platform } from "react-native";
 import configs from "../configs.json";
 import storeReview from "./storeReview";
+import { colours } from "./constants.json";
 
 const AD_UNIT_ID = __DEV__
   ? configs.testAdUnitID
@@ -28,8 +29,12 @@ export default function Main() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.wrapper}>
+        <AdMobBanner
+          style={styles.banner}
+          adUnitID={AD_UNIT_ID}
+          servePersonalizedAds
+        />
         <App />
-        <AdMobBanner adUnitID={AD_UNIT_ID} servePersonalizedAds />
       </View>
     </View>
   );
@@ -68,5 +73,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+  },
+  banner: {
+    backgroundColor: colours.background,
   },
 });

@@ -11,19 +11,18 @@ import {
 import { responsive, format } from "../helpers";
 import { colours } from "../constants.json";
 import Details from "./Details";
-import Configs from "./Configs";
+import Settings from "./Settings";
 import calculate from "../calculator";
 import Feedback from "./Feedback";
 import SalaryInput from "./SalaryInput";
-import ConfigsIcon from "./ConfigsIcon";
-import FeedbackIcon from "./FeedbackIcon";
+import Footer from "./Footer";
 
 export default function App() {
   const [salary, setSalary] = useState("");
   const [segment, setSegment] = useState(0);
   const [picker, setPicker] = useState(0);
-  const [showConfigs, setShowConfigs] = useState(false);
-  const [showContactUs, setShowContactUs] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const [configs, setConfings] = useState({
     loanPlan: 0,
     pensionRate: "0",
@@ -73,20 +72,22 @@ export default function App() {
           <Details figures={format(details)} />
           <TakeHome amount={net} />
         </View>
-        <FeedbackIcon onClick={() => setShowContactUs((prev) => !prev)} />
-        <ConfigsIcon onClick={() => setShowConfigs((prev) => !prev)} />
-        {showConfigs && (
-          <Configs
+        <Footer
+          onFeedback={() => setShowFeedback((prev) => !prev)}
+          onSettings={() => setShowSettings((prev) => !prev)}
+        />
+        {showSettings && (
+          <Settings
             configs={configs}
-            onBackgroundPress={() => setShowConfigs((prev) => !prev)}
+            onBackgroundPress={() => setShowSettings((prev) => !prev)}
             onChange={(name, value) =>
               setConfings({ ...configs, [name]: value })
             }
           />
         )}
-        {showContactUs && (
+        {showFeedback && (
           <Feedback
-            onBackgroundPress={() => setShowContactUs((prev) => !prev)}
+            onBackgroundPress={() => setShowFeedback((prev) => !prev)}
           />
         )}
       </View>
@@ -104,14 +105,12 @@ const TakeHome = (props: { amount: string }) => (
 const styles = StyleSheet.create(
   responsive({
     container: {
-      flex: 1,
-      position: "absolute",
-      width: "100%",
-      height: "100%",
+      flex: 2,
       backgroundColor: colours.background,
-      justifyContent: "center",
     },
     center: {
+      flex: 2,
+      justifyContent: "center",
       alignItems: "center",
     },
     takeHome: {

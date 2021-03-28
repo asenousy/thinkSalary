@@ -14,7 +14,7 @@ import { responsive } from "../helpers";
 
 const plans = ["none", "one", "two", "post grad"];
 
-type ConfigsProps = {
+type SettingsProps = {
   onBackgroundPress: () => void;
   onChange: (name: string, value: string | number | boolean) => void;
   configs: {
@@ -25,7 +25,7 @@ type ConfigsProps = {
   };
 };
 
-export default function Configs(props: ConfigsProps) {
+export default function Settings(props: SettingsProps) {
   const {
     onBackgroundPress,
     onChange,
@@ -49,7 +49,7 @@ export default function Configs(props: ConfigsProps) {
 
 type ScotlandTaxProps = {
   enabled: boolean;
-  onChange: ConfigsProps["onChange"];
+  onChange: SettingsProps["onChange"];
 };
 
 const ScotlandTax = ({ enabled, onChange }: ScotlandTaxProps) => (
@@ -65,7 +65,7 @@ const ScotlandTax = ({ enabled, onChange }: ScotlandTaxProps) => (
 
 type StudentPlanProps = {
   plan: number;
-  onChange: ConfigsProps["onChange"];
+  onChange: SettingsProps["onChange"];
 };
 
 const StudentPlan = ({ plan, onChange }: StudentPlanProps) => (
@@ -90,7 +90,7 @@ const StudentPlan = ({ plan, onChange }: StudentPlanProps) => (
 
 type PensionProps = {
   rate: string;
-  onChange: ConfigsProps["onChange"];
+  onChange: SettingsProps["onChange"];
 };
 
 const Pension = ({ rate, onChange }: PensionProps) => (
@@ -108,7 +108,7 @@ const Pension = ({ rate, onChange }: PensionProps) => (
 
 type HoursPerWeekProps = {
   hours: string;
-  onChange: ConfigsProps["onChange"];
+  onChange: SettingsProps["onChange"];
 };
 
 const HoursPerWeek = ({ hours, onChange }: HoursPerWeekProps) => (
