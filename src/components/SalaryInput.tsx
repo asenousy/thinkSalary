@@ -26,9 +26,10 @@ const SalaryInput = (props: SalaryInputProps) => {
           setInputSalary(inputSalary.replace(",", "").replace("£", ""))
         }
         onEndEditing={({ nativeEvent }) => {
-          const formatted = format(nativeEvent.text).replace(".00", "");
+          const newSalary = nativeEvent.text.replace(",", "");
+          const formatted = format(newSalary).replace(".00", "");
           setInputSalary(formatted === "£0" ? "" : formatted);
-          props.onSalaryChange(nativeEvent.text);
+          props.onSalaryChange(newSalary);
         }}
       />
       <Picker
