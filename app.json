@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -26,15 +24,15 @@
       "bundleIdentifier": "com.asenousy.think-salary"
     },
     "android": {
-      "permissions" : [],
+      "permissions": [],
       "icon": "./assets/icon-android.png",
       "softwareKeyboardLayoutMode": "pan",
       "config": {
         "googleMobileAdsAppId": "{{AD_UNIT_ID_ANDROID}}"
       },
-      "package": "com.asenousy.thinksalary",
-      "versionCode": 2,
-      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.asenousy.thinksalary"
+      "package": "com.asenousy.thinksalary.paid",
+      "versionCode": 1,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.asenousy.thinksalary.paid"
     }
   }
 }
