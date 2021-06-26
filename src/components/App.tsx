@@ -19,7 +19,7 @@ import Footer from "./Footer";
 
 export default function App() {
   const [salary, setSalary] = useState("");
-  const [segment, setSegment] = useState(0);
+  const [segment, setSegment] = useState(1);
   const [picker, setPicker] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
