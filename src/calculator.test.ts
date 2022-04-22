@@ -19,11 +19,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 20000,
       pension: 1000,
-      taxable: 6500,
+      taxable: 6430,
       loan: 0,
-      tax: 1300,
-      ni: 1258.08,
-      net: 16441.92,
+      tax: 1286,
+      ni: 1340.9,
+      net: 16373.1,
     });
   });
 
@@ -32,11 +32,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 28800,
       pension: 0,
-      taxable: 16300,
+      taxable: 16230,
       loan: 468,
-      tax: 3260,
-      ni: 2314.08,
-      net: 22757.92,
+      tax: 3246,
+      ni: 2506.9,
+      net: 22579.1,
     });
   });
 
@@ -45,11 +45,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 60000,
       pension: 6000,
-      taxable: 41500,
-      loan: 3655.7999999999997,
-      tax: 9100,
-      ni: 5060.4800000000005,
-      net: 36183.719999999994,
+      taxable: 41430,
+      loan: 3583.44,
+      tax: 9032,
+      ni: 5669.300000000001,
+      net: 35715.259999999995,
     });
   });
 
@@ -58,11 +58,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 100000,
       pension: 0,
-      taxable: 87500,
+      taxable: 87430,
       loan: 0,
-      tax: 27500,
-      ni: 5860.48,
-      net: 66639.52,
+      tax: 27432,
+      ni: 6969.300000000001,
+      net: 65598.7,
     });
   });
 
@@ -71,11 +71,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 110000,
       pension: 1100,
-      taxable: 100850,
-      loan: 7508.88,
-      tax: 32840,
-      ni: 6060.48,
-      net: 62490.64000000001,
+      taxable: 100780,
+      loan: 7444.08,
+      tax: 32772,
+      ni: 7294.300000000001,
+      net: 61389.619999999995,
     });
   });
 
@@ -84,11 +84,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 120000,
       pension: 2400,
-      taxable: 113900,
+      taxable: 113830,
       loan: 0,
-      tax: 38060,
-      ni: 6260.48,
-      net: 73279.52,
+      tax: 37992,
+      ni: 7619.300000000001,
+      net: 71988.7,
     });
   });
 
@@ -97,11 +97,11 @@ describe("England Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 125000,
       pension: 0,
-      taxable: 125000,
+      taxable: 124930,
       loan: 0,
-      tax: 42500,
-      ni: 6360.48,
-      net: 76139.52,
+      tax: 42432,
+      ni: 7781.800000000001,
+      net: 74786.2,
     });
   });
 
@@ -112,9 +112,9 @@ describe("England Tax", () => {
       pension: 0,
       taxable: 130000,
       loan: 0,
-      tax: 44500,
-      ni: 6460.48,
-      net: 79039.52,
+      tax: 44460,
+      ni: 7944.300000000001,
+      net: 77595.7,
     });
   });
 
@@ -125,9 +125,9 @@ describe("England Tax", () => {
       pension: 9000,
       taxable: 171000,
       loan: 0,
-      tax: 62575,
-      ni: 7460.48,
-      net: 100964.52,
+      tax: 62538.5,
+      ni: 9569.300000000001,
+      net: 98892.2,
     });
   });
 });
@@ -161,11 +161,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 14000,
       pension: 0,
-      taxable: 1500,
+      taxable: 1430,
       loan: 0,
-      tax: 285,
-      ni: 538.0799999999999,
-      net: 13176.92,
+      tax: 271.7,
+      ni: 545.9,
+      net: 13182.4,
     });
   });
 
@@ -179,11 +179,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 20000,
       pension: 0,
-      taxable: 7500,
+      taxable: 7430,
       loan: 0,
-      tax: 1479.15,
-      ni: 1258.08,
-      net: 17262.769999999997,
+      tax: 1464.38,
+      ni: 1340.9,
+      net: 17194.719999999998,
     });
   });
 
@@ -197,11 +197,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 28800,
       pension: 0,
-      taxable: 16300,
+      taxable: 16230,
       loan: 0,
-      tax: 3275.5699999999997,
-      ni: 2314.08,
-      net: 23210.35,
+      tax: 3255.5000000000005,
+      ni: 2506.9,
+      net: 23037.6,
     });
   });
 
@@ -215,11 +215,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 60000,
       pension: 6000,
-      taxable: 41500,
-      loan: 3655.7999999999997,
-      tax: 10681.57,
-      ni: 5060.4800000000005,
-      net: 34602.149999999994,
+      taxable: 41430,
+      loan: 3583.44,
+      tax: 10922.5,
+      ni: 5669.300000000001,
+      net: 33824.759999999995,
     });
   });
 
@@ -233,11 +233,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 100000,
       pension: 0,
-      taxable: 87500,
+      taxable: 87430,
       loan: 0,
-      tax: 29541.569999999996,
-      ni: 5860.48,
-      net: 64597.95000000001,
+      tax: 29322.5,
+      ni: 6969.300000000001,
+      net: 63708.2,
     });
   });
 
@@ -251,11 +251,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 110000,
       pension: 1100,
-      taxable: 100850,
-      loan: 7508.88,
-      tax: 35015.07,
-      ni: 6060.48,
-      net: 60315.57,
+      taxable: 100780,
+      loan: 7444.08,
+      tax: 34662.5,
+      ni: 7294.300000000001,
+      net: 59499.119999999995,
     });
   });
 
@@ -269,11 +269,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 120000,
       pension: 2400,
-      taxable: 113900,
+      taxable: 113830,
       loan: 0,
-      tax: 40365.57,
-      ni: 6260.48,
-      net: 70973.95,
+      tax: 39882.5,
+      ni: 7619.300000000001,
+      net: 70098.2,
     });
   });
 
@@ -287,11 +287,11 @@ describe("Scotland Tax", () => {
     expect(calculate(payDetails)).toEqual({
       gross: 125000,
       pension: 0,
-      taxable: 125000,
+      taxable: 124930,
       loan: 0,
-      tax: 44916.57,
-      ni: 6360.48,
-      net: 73722.95,
+      tax: 44322.5,
+      ni: 7781.800000000001,
+      net: 72895.7,
     });
   });
 
@@ -307,9 +307,9 @@ describe("Scotland Tax", () => {
       pension: 0,
       taxable: 130000,
       loan: 0,
-      tax: 46966.57,
-      ni: 6460.48,
-      net: 76572.95,
+      tax: 46350.5,
+      ni: 7944.300000000001,
+      net: 75705.2,
     });
   });
 
@@ -325,9 +325,9 @@ describe("Scotland Tax", () => {
       pension: 9000,
       taxable: 171000,
       loan: 0,
-      tax: 65451.57,
-      ni: 7460.48,
-      net: 98087.95,
+      tax: 65057.020000000004,
+      ni: 9569.300000000001,
+      net: 96373.68,
     });
   });
 });
@@ -340,9 +340,9 @@ describe("Calculate salary in time units", () => {
       pension: 9000,
       taxable: 171000,
       loan: 0,
-      tax: 62575,
-      ni: 7460.48,
-      net: 100964.52,
+      tax: 62538.5,
+      ni: 9569.300000000001,
+      net: 98892.2,
     });
   });
 
@@ -358,9 +358,9 @@ describe("Calculate salary in time units", () => {
       pension: 750,
       taxable: 14250,
       loan: 0,
-      tax: 5214.583333333333,
-      ni: 621.7066666666666,
-      net: 8413.710000000001,
+      tax: 5211.541666666667,
+      ni: 797.4416666666667,
+      net: 8241.016666666666,
     });
   });
 });
