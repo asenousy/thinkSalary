@@ -1,18 +1,13 @@
-import React, { Props } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  Switch,
-  TouchableWithoutFeedback,
-  Platform,
-} from "react-native";
+import React from "react";
+import { StyleSheet, View, Text, TextInput, Switch, TouchableWithoutFeedback, Platform } from "react-native";
 import { colours } from "../constants.json";
 import { Picker } from "@react-native-community/picker";
 import { responsive } from "../helpers";
+import { LOAN_RULES } from "../calculator";
 
-const plans = ["none", "one", "two", "post grad"];
+const plans = LOAN_RULES.map((_, i) => "" + i);
+plans[0] = "None";
+plans[plans.length - 1] = "Post Grad";
 
 type SettingsProps = {
   onBackgroundPress: () => void;
@@ -55,11 +50,7 @@ type ScotlandTaxProps = {
 const ScotlandTax = ({ enabled, onChange }: ScotlandTaxProps) => (
   <View style={styles.row}>
     <Text style={styles.label}>Scotland Tax :</Text>
-    <Switch
-      style={styles.switch}
-      value={enabled}
-      onValueChange={(val) => onChange("scotlandTax", val)}
-    />
+    <Switch style={styles.switch} value={enabled} onValueChange={(val) => onChange("scotlandTax", val)} />
   </View>
 );
 
